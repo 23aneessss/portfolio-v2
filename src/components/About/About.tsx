@@ -158,6 +158,63 @@ export default function About({ personal, stats }: AboutProps) {
           padding: 8px 12px;
           text-align: center;
         }
+        .rpg-card__portrait {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          border-bottom: 2px solid var(--border);
+          overflow: hidden;
+          background: var(--bg);
+        }
+        .rpg-card__portrait img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          filter: contrast(1.05) saturate(0.92) brightness(1.02);
+        }
+        .rpg-card__scan {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.16) 0,
+            rgba(0, 0, 0, 0.16) 1px,
+            transparent 1px,
+            transparent 3px
+          );
+          box-shadow: inset 0 0 50px rgba(57, 255, 20, 0.14);
+        }
+        .rpg-card__pname {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          padding: 6px 8px;
+          font-size: 0.46rem;
+          color: var(--green);
+          background: linear-gradient(
+            0deg,
+            rgba(10, 10, 15, 0.92),
+            transparent
+          );
+          text-shadow: 0 0 6px var(--green-soft);
+        }
+        .rpg-card__portrait--empty {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.55rem;
+          color: var(--dim);
+          background: repeating-linear-gradient(
+            45deg,
+            var(--surface) 0,
+            var(--surface) 8px,
+            var(--surface-2) 8px,
+            var(--surface-2) 16px
+          );
+        }
         .rpg-card__meta {
           display: flex;
           flex-direction: column;

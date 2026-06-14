@@ -148,18 +148,11 @@
 
   "timeline": [
     {
-      "year": "2024 - Present",
-      "title": "Computer Science Student",
-      "org": "National Higher School of Computer Science, ESI Algiers",
-      "description": "Currently in my second year, building strong foundations in computer science while continuing to grow through hands-on product work across web, mobile, and backend development.",
+      "year": "2023",
+      "title": "First Baccalaureate",
+      "org": "Academic Milestone",
+      "description": "Earned my first baccalaureate in 2023, marking the beginning of my higher-education journey and the next step toward engineering and computer science.",
       "type": "EDUCATION"
-    },
-    {
-      "year": "2024 - Present",
-      "title": "Active Member",
-      "org": "ETIC Club",
-      "description": "Active member since 2024, contributing to club initiatives and projects, including work around external relations and internal digital platforms.",
-      "type": "WORK"
     },
     {
       "year": "2023 - 2024",
@@ -176,11 +169,25 @@
       "type": "EDUCATION"
     },
     {
-      "year": "2023",
-      "title": "First Baccalaureate",
-      "org": "Academic Milestone",
-      "description": "Earned my first baccalaureate in 2023, marking the beginning of my higher-education journey and the next step toward engineering and computer science.",
+      "year": "2024 - Present",
+      "title": "Computer Science Student",
+      "org": "National Higher School of Computer Science, ESI Algiers",
+      "description": "Currently in my second year, building strong foundations in computer science while continuing to grow through hands-on product work across web, mobile, and backend development.",
       "type": "EDUCATION"
+    },
+    {
+      "year": "2024 - Present",
+      "title": "Active Member",
+      "org": "ETIC Club",
+      "description": "Active member since 2024, contributing to club initiatives and projects, including work around external relations and internal digital platforms.",
+      "type": "WORK"
+    },
+    {
+      "year": "2026",
+      "title": "Event Coordinator",
+      "org": "S2EE 17 · ETIC Club",
+      "description": "Coordinated the 17th edition of S2EE, organizing teams, logistics, and partners to deliver the event with ETIC.",
+      "type": "EVENT"
     }
   ]
 }
