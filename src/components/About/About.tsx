@@ -21,12 +21,10 @@ export default function About({ personal, stats }: AboutProps) {
   const charClass = role.replace(" Developer", " Dev");
 
   // animate stat bars when the card enters view
-  useScrollAnimation(cardRef as React.RefObject<HTMLElement>, () =>
-    setRevealed(true)
-  );
+  useScrollAnimation(cardRef, () => setRevealed(true));
 
   // type the bio line by line when it enters view
-  useScrollAnimation(bioRef as React.RefObject<HTMLElement>, () => {
+  useScrollAnimation(bioRef, () => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       setTyped(personal.bio);

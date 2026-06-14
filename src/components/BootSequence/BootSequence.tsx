@@ -20,7 +20,6 @@ export default function BootSequence({ handle }: BootSequenceProps) {
   const [phase, setPhase] = useState<Phase>("flicker");
   const [typed, setTyped] = useState("");
   const [flash, setFlash] = useState<"black" | "white">("black");
-  const startedRef = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const preRef = useRef<HTMLPreElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -37,9 +36,6 @@ export default function BootSequence({ handle }: BootSequenceProps) {
   const script = lines.join("\n");
 
   useEffect(() => {
-    if (startedRef.current) return;
-    startedRef.current = true;
-
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -54,6 +50,7 @@ export default function BootSequence({ handle }: BootSequenceProps) {
     document.body.style.overflow = "hidden";
 
     const timers: number[] = [];
+    let dissolveRaf = 0;
     const at = (fn: () => void, ms: number) =>
       timers.push(window.setTimeout(fn, ms));
 

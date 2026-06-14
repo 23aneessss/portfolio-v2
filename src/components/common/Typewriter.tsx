@@ -25,7 +25,7 @@ export default function Typewriter({
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
 
-  useScrollAnimation(ref as React.RefObject<HTMLElement>, () => {
+  useScrollAnimation(ref, () => {
     let i = 0;
     const tick = () => {
       i += 1;

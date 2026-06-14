@@ -17,7 +17,7 @@ export default function RevealSection({
   const barRef = useRef<HTMLDivElement | null>(null);
 
   useScrollAnimation(
-    ref as React.RefObject<HTMLElement>,
+    ref,
     () => {
       const bar = barRef.current;
       if (!bar) return;

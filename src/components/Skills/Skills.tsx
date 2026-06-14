@@ -110,9 +110,7 @@ export default function Skills({ skills }: SkillsProps) {
   const [tab, setTab] = useState<SkillCategory>("languages");
   const [revealed, setRevealed] = useState(false);
 
-  useScrollAnimation(ref as React.RefObject<HTMLElement>, () =>
-    setRevealed(true)
-  );
+  useScrollAnimation(ref, () => setRevealed(true));
 
   const items = skills[tab];
 

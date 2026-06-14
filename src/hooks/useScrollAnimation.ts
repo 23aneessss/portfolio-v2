@@ -20,8 +20,8 @@ interface Options {
  * Calls `onEnter` when `ref` scrolls into view. When the user prefers reduced
  * motion, `onEnter` fires immediately so the final (static) state is served.
  */
-export function useScrollAnimation(
-  ref: RefObject<HTMLElement | null>,
+export function useScrollAnimation<T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T | null>,
   onEnter: () => void,
   options: Options = {}
 ) {
