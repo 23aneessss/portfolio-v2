@@ -20,6 +20,17 @@ export default function About({ personal, stats }: AboutProps) {
   // derive RPG card fields from data
   const role = personal.title.split(",").slice(1).join(",").trim() || personal.title;
   const charClass = role.replace(" Developer", " Dev");
+  const githubHandle = personal.github.replace(/^https?:\/\//, "");
+
+  // quick-reference readout shown under the bio
+  const specs: [string, string][] = [
+    ["ROLE", role],
+    ["LOCATION", personal.location],
+    ["SCHOOL", personal.school],
+    ["LEVEL", personal.year],
+    ["FOCUS", "Web · Mobile · Backend"],
+    ["GITHUB", githubHandle],
+  ];
 
   // animate stat bars when the card enters view
   useScrollAnimation(cardRef, () => setRevealed(true));
@@ -120,16 +131,44 @@ export default function About({ personal, stats }: AboutProps) {
             </ul>
           </div>
 
-          {/* ---- bio ---- */}
-          <div ref={bioRef} className="about__bio">
-            {personal.bio.map((line, i) => (
-              <p key={i} className="about__bioline">
-                <span className="green">{">"}</span> {typed[i]}
-                {typed[i] && typed[i].length < line.length && (
-                  <span className="blink">█</span>
-                )}
-              </p>
-            ))}
+          {/* ---- bio + system specs ---- */}
+          <div className="about__right">
+            <div ref={bioRef} className="about__bio">
+              {personal.bio.map((line, i) => (
+                <p key={i} className="about__bioline">
+                  <span className="green">{">"}</span> {typed[i]}
+                  {typed[i] && typed[i].length < line.length && (
+                    <span className="blink">█</span>
+                  )}
+                </p>
+              ))}
+            </div>
+
+            <div className="about__specs">
+              <div className="about__specs-bar">{">"} SYSTEM_SPECS.CFG</div>
+              <ul className="about__specs-list">
+                {specs.map(([k, v]) => (
+                  <li key={k}>
+                    <span className="dim">{k}</span>
+                    <span className="about__specs-val">{v}</span>
+                  </li>
+                ))}
+                <li>
+                  <span className="dim">STATUS</span>
+                  <span className="green">
+                    <span
+                      className="led-dot led-dot--pulse"
+                      style={{ width: 8, height: 8, marginRight: 7, verticalAlign: "middle" }}
+                      aria-hidden
+                    />
+                    OPEN TO OPPORTUNITIES
+                  </span>
+                </li>
+              </ul>
+              <div className="about__specs-prompt green">
+                {">"} READY_<span className="blink">█</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -137,9 +176,9 @@ export default function About({ personal, stats }: AboutProps) {
       <style jsx>{`
         .about__grid {
           display: grid;
-          grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+          grid-template-columns: minmax(0, 360px) 1fr;
           gap: var(--space-6);
-          align-items: start;
+          align-items: stretch;
         }
         .rpg-card {
           background: var(--surface);
@@ -161,7 +200,7 @@ export default function About({ personal, stats }: AboutProps) {
         .rpg-card__portrait {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1;
+          height: clamp(300px, 30vw, 360px);
           border-bottom: 2px solid var(--border);
           overflow: hidden;
           background: var(--bg);
@@ -262,6 +301,12 @@ export default function About({ personal, stats }: AboutProps) {
           font-size: 0.5rem;
           text-align: right;
         }
+        .about__right {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-4);
+          min-width: 0;
+        }
         .about__bio {
           display: flex;
           flex-direction: column;
@@ -274,10 +319,64 @@ export default function About({ personal, stats }: AboutProps) {
           color: var(--white);
           min-height: 1.2em;
         }
+        .about__specs {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          border: 2px solid var(--border);
+          background:
+            radial-gradient(
+              ellipse at 50% 0%,
+              rgba(52, 224, 161, 0.05),
+              transparent 60%
+            ),
+            var(--surface);
+          box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .about__specs-bar {
+          background: var(--border);
+          color: var(--green);
+          font-size: 0.5rem;
+          letter-spacing: 1px;
+          padding: 8px 12px;
+          border-bottom: 2px solid var(--border);
+        }
+        .about__specs-list {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          padding: var(--space-3);
+          font-size: 0.52rem;
+        }
+        .about__specs-list li {
+          display: flex;
+          justify-content: space-between;
+          gap: 14px;
+          align-items: baseline;
+        }
+        .about__specs-list li > span:first-child {
+          color: var(--dim);
+          white-space: nowrap;
+        }
+        .about__specs-val {
+          color: var(--white);
+          text-align: right;
+          word-break: break-word;
+        }
+        .about__specs-prompt {
+          margin-top: auto;
+          padding: 12px var(--space-3);
+          border-top: 2px solid var(--border);
+          font-size: 0.5rem;
+        }
         @media (max-width: 768px) {
           .about__grid {
             grid-template-columns: 1fr;
             gap: var(--space-4);
+          }
+          .rpg-card__portrait {
+            height: clamp(320px, 80vw, 460px);
           }
           .rpg-card__stats li {
             grid-template-columns: 80px 1fr 26px;
