@@ -112,7 +112,6 @@ export default function BootSequence({ handle }: BootSequenceProps) {
 
       const base = Math.max(14, h / 36); // px cleared per frame
       let frame = 0;
-      let raf = 0;
 
       const step = () => {
         frame += 1;
@@ -135,10 +134,9 @@ export default function BootSequence({ handle }: BootSequenceProps) {
           finish();
           return;
         }
-        raf = requestAnimationFrame(step);
+        dissolveRaf = requestAnimationFrame(step);
       };
-      raf = requestAnimationFrame(step);
-      timers.push(raf); // tracked so cleanup can cancel via clearTimeout-safe noop
+      dissolveRaf = requestAnimationFrame(step);
     };
 
     const finish = () => {
@@ -149,6 +147,7 @@ export default function BootSequence({ handle }: BootSequenceProps) {
 
     return () => {
       timers.forEach((t) => window.clearTimeout(t));
+      cancelAnimationFrame(dissolveRaf);
       document.body.style.overflow = prevOverflow;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

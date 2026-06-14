@@ -32,7 +32,7 @@ export default function FloppyDisk({
       className={`disk${inserting ? " disk--inserting" : ""}`}
       onClick={handleClick}
       aria-label={`Open ${project.label} project disk`}
-      style={{ ["--i" as string]: index }}
+      style={{ ["--i"]: index } as React.CSSProperties}
     >
       {/* status LED */}
       <span

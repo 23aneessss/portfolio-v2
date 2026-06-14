@@ -142,7 +142,7 @@ export default function Contact({ personal }: ContactProps) {
                   </div>
                 ) : (
                   <button type="submit" className="pixel-btn">
-                    [ TRANSMIT >>> ]
+                    [ TRANSMIT {">>>"} ]
                   </button>
                 )}
               </form>
