@@ -17,7 +17,7 @@ const data = raw as unknown as PortfolioData;
 export default function Home() {
   return (
     <>
-      <Navigation handle={data.personal.handle} />
+      <Navigation brand={data.personal.brand} />
 
       <main>
         <Hero personal={data.personal} />
@@ -41,7 +41,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="container">
-          <span className="green">{data.personal.handle}</span>
+          <span className="green">{data.personal.brand}</span>
           <span className="dim">
             {">"} crafted with pixels, three.js &amp; gsap · {data.personal.year} ·{" "}
             {data.personal.school}

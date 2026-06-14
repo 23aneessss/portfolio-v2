@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 interface NavigationProps {
-  handle: string;
+  brand: string;
 }
 
 const LINKS = [
@@ -14,7 +14,7 @@ const LINKS = [
   { label: "CONNECT", href: "#contact" },
 ];
 
-export default function Navigation({ handle }: NavigationProps) {
+export default function Navigation({ brand }: NavigationProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -81,7 +81,7 @@ export default function Navigation({ handle }: NavigationProps) {
             style={{ width: 7, height: 7 }}
             aria-hidden
           />
-          {handle}
+          {brand}
         </button>
 
         {/* center — desktop links */}

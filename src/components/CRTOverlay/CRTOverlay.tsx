@@ -51,9 +51,9 @@ export default function CRTOverlay() {
       // faint moving "phosphor refresh" band for extra life
       const bandY = (drift * 6) % (height + 200) - 100;
       const grad = ctx.createLinearGradient(0, bandY, 0, bandY + 90);
-      grad.addColorStop(0, "rgba(57, 255, 20, 0)");
-      grad.addColorStop(0.5, "rgba(57, 255, 20, 0.035)");
-      grad.addColorStop(1, "rgba(57, 255, 20, 0)");
+      grad.addColorStop(0, "rgba(52, 224, 161, 0)");
+      grad.addColorStop(0.5, "rgba(52, 224, 161, 0.035)");
+      grad.addColorStop(1, "rgba(52, 224, 161, 0)");
       ctx.fillStyle = grad;
       ctx.fillRect(0, bandY, width, 90);
     };

@@ -18,7 +18,7 @@ const TYPE_COLOR: Record<TimelineType, string> = {
   EDUCATION: "#3a8ee6",
   WORK: "#ffb000",
   COMMUNITY: "#ffb000",
-  PROJECT: "#39ff14",
+  PROJECT: "#34e0a1",
   EVENT: "#ff6b9d",
   ONGOING: "#b06bd6",
 };
@@ -258,9 +258,9 @@ export default function Timeline({ timeline }: TimelineProps) {
       ctx.fillRect(Math.round(cxp - 3), Math.round(cyp + 1), 6, 2);
       b(-2, -11, 4, 4, "#e3b48a"); // head
       b(-2, -13, 4, 2, "#2a2a3f"); // hair
-      b(-2, -7, 4, 4, "#39ff14"); // shirt
-      b(-4, -7, 2, 3, "#39ff14");
-      b(2, -7, 2, 3, "#39ff14"); // arms
+      b(-2, -7, 4, 4, "#34e0a1"); // shirt
+      b(-4, -7, 2, 3, "#34e0a1");
+      b(2, -7, 2, 3, "#34e0a1"); // arms
       if (walk && frame === 1) {
         b(-3, -3, 2, 3, "#2a2a3f");
         b(1, -3, 2, 3, "#2a2a3f");

@@ -17,9 +17,9 @@ const pressStart = Press_Start_2P({
 const { personal } = data;
 
 export const metadata: Metadata = {
-  title: `${personal.handle} — ${personal.name}`,
-  description: `${personal.title} · ${personal.school}. A pixel-art retro-OS portfolio.`,
-  authors: [{ name: personal.name, url: personal.github }],
+  title: `${personal.brand} — Portfolio`,
+  description: `${personal.brand} · ${personal.title}, ${personal.school}. A pixel-art retro-OS portfolio.`,
+  authors: [{ name: personal.brand, url: personal.github }],
   keywords: [
     "portfolio",
     "developer",
@@ -27,10 +27,11 @@ export const metadata: Metadata = {
     "retro",
     "Next.js",
     "Three.js",
+    personal.brand,
     personal.name,
   ],
   openGraph: {
-    title: `${personal.handle} — ${personal.name}`,
+    title: `${personal.brand} — Portfolio`,
     description: personal.title,
     type: "website",
   },

@@ -2,7 +2,7 @@
 // inventory icon marks so the same tech always reads the same color.
 
 const PALETTE = [
-  "#39ff14",
+  "#34e0a1",
   "#ffb000",
   "#ff2e2e",
   "#3a8ee6",

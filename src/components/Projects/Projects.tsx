@@ -201,7 +201,7 @@ export default function Projects({ projects }: ProjectsProps) {
           background: linear-gradient(
             180deg,
             transparent,
-            rgba(57, 255, 20, 0.015),
+            rgba(52, 224, 161, 0.015),
             transparent
           );
         }

@@ -206,7 +206,7 @@ export default function PixelRoom() {
     const drawScreen = (cursorOn: boolean) => {
       sctx.fillStyle = "#06140a";
       sctx.fillRect(0, 0, sc.width, sc.height);
-      sctx.fillStyle = "#39ff14";
+      sctx.fillStyle = "#34e0a1";
       sctx.font = "9px monospace";
       sctx.fillText(">RUN", 6, 16);
       sctx.fillText("ANESS", 6, 30);
@@ -223,7 +223,7 @@ export default function PixelRoom() {
     const key = new THREE.DirectionalLight(0xbfe9ff, 1.2);
     key.position.set(8, 16, 12);
     scene.add(key);
-    const greenGlow = new THREE.PointLight(0x39ff14, 0.9, 22);
+    const greenGlow = new THREE.PointLight(0x34e0a1, 0.9, 22);
     greenGlow.position.set(8 - cx, 8 - cy, 7 - cz);
     scene.add(greenGlow);
     const lampGlow = new THREE.PointLight(0xffb000, 1.0, 18);

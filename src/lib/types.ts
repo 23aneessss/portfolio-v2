@@ -13,6 +13,9 @@ export type TimelineType =
 
 export interface Personal {
   name: string;
+  /** Clean display name used for the page title, nav and footer. */
+  brand: string;
+  /** Retro system handle used in the boot/terminal flavor (e.g. "ANESS.SYS"). */
   handle: string;
   title: string;
   school: string;

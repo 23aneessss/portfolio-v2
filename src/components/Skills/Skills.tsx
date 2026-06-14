@@ -156,7 +156,7 @@ export default function Skills({ skills }: SkillsProps) {
           background:
             radial-gradient(
               ellipse at 50% 0%,
-              rgba(57, 255, 20, 0.04),
+              rgba(52, 224, 161, 0.04),
               transparent 60%
             ),
             var(--surface);

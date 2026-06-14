@@ -118,10 +118,10 @@ export default function Hero({ personal }: HeroProps) {
       <style jsx>{`
         .hero {
           position: relative;
-          min-height: 100vh;
+          min-height: min(88vh, 760px);
           display: flex;
           align-items: center;
-          padding-top: var(--nav-h);
+          padding: calc(var(--nav-h) + var(--space-2)) 0 var(--space-6);
           overflow: hidden;
         }
         .hero__grid {
@@ -178,7 +178,7 @@ export default function Hero({ personal }: HeroProps) {
           background:
             radial-gradient(
               ellipse at 50% 40%,
-              rgba(57, 255, 20, 0.06),
+              rgba(52, 224, 161, 0.06),
               transparent 70%
             ),
             var(--surface);
@@ -187,8 +187,9 @@ export default function Hero({ personal }: HeroProps) {
         .hero__scrollcue {
           position: absolute;
           bottom: 18px;
-          left: 50%;
-          transform: translateX(-50%);
+          left: 0;
+          right: 0;
+          text-align: center;
           font-size: 0.5rem;
           letter-spacing: 2px;
           animation: float-bob 2.2s steps(6) infinite;

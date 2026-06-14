@@ -88,7 +88,7 @@ export default function About({ personal, stats }: AboutProps) {
             <div className="rpg-card__meta">
               <div>
                 <span className="dim">NAME</span>
-                <span className="green">{personal.handle}</span>
+                <span className="green">{personal.brand}</span>
               </div>
               <div>
                 <span className="dim">CLASS</span>
@@ -184,7 +184,7 @@ export default function About({ personal, stats }: AboutProps) {
             transparent 1px,
             transparent 3px
           );
-          box-shadow: inset 0 0 50px rgba(57, 255, 20, 0.14);
+          box-shadow: inset 0 0 50px rgba(52, 224, 161, 0.14);
         }
         .rpg-card__pname {
           position: absolute;
