@@ -43,8 +43,7 @@ export default function Home() {
         <div className="container">
           <span className="green">{data.personal.brand}</span>
           <span className="dim">
-            {">"} crafted with pixels, three.js &amp; gsap · {data.personal.year} ·{" "}
-            {data.personal.school}
+            {">"} crafted with pixels and caffeine
           </span>
           <span className="dim">© {new Date().getFullYear()} · ALL SYSTEMS NOMINAL ●</span>
         </div>
