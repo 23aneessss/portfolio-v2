@@ -26,6 +26,36 @@
 
   "projects": [
     {
+      "id": "sequence",
+      "label": "Sequence",
+      "category": "Mobile",
+      "subcategory": "iOS · Habits",
+      "status": "LIVE",
+      "description": "A GitHub-style contribution-graph habit tracker for iOS — every day is a square, so you build streaks you don't want to break. Local-first, built with SwiftUI and SwiftData.",
+      "stack": ["Swift", "SwiftUI", "SwiftData"],
+      "link": "https://github.com/23aneessss/Sequence"
+    },
+    {
+      "id": "jo3t-app",
+      "label": "JO3T",
+      "category": "Mobile",
+      "subcategory": "Discovery · Local",
+      "status": "LIVE",
+      "description": "A Flutter mobile app for discovering places, food, and local experiences across Algeria — simple, fast, and community-driven.",
+      "stack": ["Flutter", "Dart", "Mobile UI"],
+      "link": "https://github.com/23aneessss/jo3t-app"
+    },
+    {
+      "id": "ba33-aup4",
+      "label": "Ba33-AUP",
+      "category": "Platform",
+      "subcategory": "Traceability",
+      "status": "LIVE",
+      "description": "Algeria's NFN wool traceability platform — a monorepo with a NestJS/PostgreSQL backend, three Flutter mobile apps (Collector, Shepherd, Transporter), and dedicated web portals, built on a strict feature-based MVVM architecture with Riverpod and a shared design system.",
+      "stack": ["TypeScript", "NestJS", "PostgreSQL", "Flutter"],
+      "link": "https://github.com/23aneessss/ba33-aup4"
+    },
+    {
       "id": "student-planner",
       "label": "Student Planner",
       "category": "Mobile",
