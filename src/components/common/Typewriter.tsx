@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ElementType } from "react";
+import { useEffect, useRef, useState, type ElementType } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 interface TypewriterProps {
@@ -22,12 +22,29 @@ export default function Typewriter({
   as: Tag = "span",
 }: TypewriterProps) {
   const ref = useRef<HTMLElement | null>(null);
+  const mounted = useRef(true);
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
 
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
   useScrollAnimation(ref, () => {
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduce) {
+      setCount(text.length);
+      setDone(true);
+      return;
+    }
     let i = 0;
     const tick = () => {
+      if (!mounted.current) return;
       i += 1;
       setCount(i);
       if (i >= text.length) {
