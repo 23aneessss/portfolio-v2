@@ -14,6 +14,7 @@ export default function About({ personal, stats }: AboutProps) {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const bioRef = useRef<HTMLDivElement | null>(null);
   const [revealed, setRevealed] = useState(false);
+  const [avatarOk, setAvatarOk] = useState(true);
   const [typed, setTyped] = useState<string[]>(personal.bio.map(() => ""));
 
   // derive RPG card fields from data
@@ -66,6 +67,23 @@ export default function About({ personal, stats }: AboutProps) {
           {/* ---- RPG character card ---- */}
           <div ref={cardRef} className="rpg-card bracket-frame">
             <div className="rpg-card__titlebar">CHARACTER SHEET</div>
+
+            {personal.avatar && avatarOk ? (
+              <div className="rpg-card__portrait">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={personal.avatar}
+                  alt={personal.name}
+                  onError={() => setAvatarOk(false)}
+                />
+                <span className="rpg-card__scan" aria-hidden />
+                <span className="rpg-card__pname">{personal.name}</span>
+              </div>
+            ) : (
+              <div className="rpg-card__portrait rpg-card__portrait--empty">
+                <span className="dim">◢ NO SIGNAL ◣</span>
+              </div>
+            )}
 
             <div className="rpg-card__meta">
               <div>

@@ -5,6 +5,7 @@ export type ProjectStatus = "LIVE" | "IN PROGRESS";
 
 export type TimelineType =
   | "EDUCATION"
+  | "WORK"
   | "COMMUNITY"
   | "PROJECT"
   | "EVENT"
@@ -20,6 +21,8 @@ export interface Personal {
   bio: string[];
   github: string;
   email: string;
+  /** Path to a portrait image in /public (e.g. "/me.jpg"). Optional. */
+  avatar?: string;
 }
 
 export interface Stat {
@@ -55,6 +58,8 @@ export type SkillCategory = keyof Skills;
 export interface TimelineEntry {
   year: string;
   title: string;
+  /** Organisation / institution shown under the title. Optional. */
+  org?: string;
   description: string;
   type: TimelineType;
 }

@@ -12,7 +12,8 @@
       "Active member of ETIC. Interested in clean architecture, thoughtful interfaces, and Discord bots."
     ],
     "github": "https://github.com/23aneessss",
-    "email": "oa_bouziani@esi.dz"
+    "email": "oa_bouziani@esi.dz",
+    "avatar": "/me.jpg"
   },
 
   "stats": [
@@ -147,40 +148,39 @@
 
   "timeline": [
     {
-      "year": "2024",
-      "title": "ESI Algiers — Enrolled",
-      "description": "Started Computer Science at the National Higher School of Computer Science, 2CP program.",
+      "year": "2024 - Present",
+      "title": "Computer Science Student",
+      "org": "National Higher School of Computer Science, ESI Algiers",
+      "description": "Currently in my second year, building strong foundations in computer science while continuing to grow through hands-on product work across web, mobile, and backend development.",
+      "type": "EDUCATION"
+    },
+    {
+      "year": "2024 - Present",
+      "title": "Active Member",
+      "org": "ETIC Club",
+      "description": "Active member since 2024, contributing to club initiatives and projects, including work around external relations and internal digital platforms.",
+      "type": "WORK"
+    },
+    {
+      "year": "2023 - 2024",
+      "title": "Autonomous Systems Studies",
+      "org": "National Higher School of Autonomous Systems",
+      "description": "Completed one year of study in autonomous systems, then earned a second baccalaureate in 2024 as part of that academic path.",
       "type": "EDUCATION"
     },
     {
       "year": "2024",
-      "title": "Joined ETIC",
-      "description": "Active member contributing to club initiatives and community-focused projects.",
-      "type": "COMMUNITY"
+      "title": "Second Baccalaureate",
+      "org": "Academic Milestone",
+      "description": "Earned a second baccalaureate in 2024, opening the path into the computer science field and the ESI Algiers program.",
+      "type": "EDUCATION"
     },
     {
-      "year": "2025",
-      "title": "Port-Flow shipped",
-      "description": "Full logistics platform with role-based management across web and mobile.",
-      "type": "PROJECT"
-    },
-    {
-      "year": "2025",
-      "title": "Student Planner shipped",
-      "description": "Flutter mobile productivity app for academic scheduling.",
-      "type": "PROJECT"
-    },
-    {
-      "year": "2025",
-      "title": "S2EE Job Fair — 17th Edition",
-      "description": "Helped organize the student entrepreneurship and employment fair at ESI.",
-      "type": "EVENT"
-    },
-    {
-      "year": "2025–2026",
-      "title": "DoctorCom · Nearby · and more",
-      "description": "Actively building across HealthTech, marketplaces, and internal tooling.",
-      "type": "ONGOING"
+      "year": "2023",
+      "title": "First Baccalaureate",
+      "org": "Academic Milestone",
+      "description": "Earned my first baccalaureate in 2023, marking the beginning of my higher-education journey and the next step toward engineering and computer science.",
+      "type": "EDUCATION"
     }
   ]
 }

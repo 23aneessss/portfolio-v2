@@ -16,29 +16,12 @@ interface Pt {
 
 const TYPE_COLOR: Record<TimelineType, string> = {
   EDUCATION: "#3a8ee6",
+  WORK: "#ffb000",
   COMMUNITY: "#ffb000",
   PROJECT: "#39ff14",
   EVENT: "#ff6b9d",
   ONGOING: "#b06bd6",
 };
-
-function layout(n: number, cols = 3): Pt[] {
-  const rows = Math.ceil(n / cols);
-  const xPad = 0.13;
-  const yTop = 0.3;
-  const yBot = 0.74;
-  const pts: Pt[] = [];
-  for (let i = 0; i < n; i++) {
-    const r = Math.floor(i / cols);
-    const c = i % cols;
-    const visualCol = r % 2 === 1 ? cols - 1 - c : c;
-    const x =
-      cols === 1 ? 0.5 : xPad + (visualCol / (cols - 1)) * (1 - 2 * xPad);
-    const y = rows === 1 ? 0.52 : yTop + (r / (rows - 1)) * (yBot - yTop);
-    pts.push({ x, y });
-  }
-  return pts;
-}
 
 function mulberry(seed: number) {
   return () => {
@@ -50,20 +33,34 @@ function mulberry(seed: number) {
   };
 }
 
+const shortYear = (year: string) => (year.match(/\d{4}/)?.[0] ?? year);
+
 export default function Timeline({ timeline }: TimelineProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const stickyRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const logRef = useRef<HTMLOListElement | null>(null);
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const progressRef = useRef(0);
   const [active, setActive] = useState(0);
 
-  const nodes = layout(timeline.length);
+  // node positions: a vertical winding path, top → bottom
+  const nodes: Pt[] = timeline.map((_, i) => {
+    const n = timeline.length;
+    const y = n > 1 ? 0.22 + (i / (n - 1)) * 0.7 : 0.5;
+    const x = 0.5 + 0.2 * Math.sin(i * 1.15 + 0.4);
+    return { x, y };
+  });
+  const house: Pt = { x: 0.5, y: 0.07 };
+  const waypoints: Pt[] = [house, ...nodes];
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const sticky = stickyRef.current;
     const section = sectionRef.current;
-    if (!canvas || !sticky || !section) return;
+    const map = mapRef.current;
+    if (!canvas || !sticky || !section || !map) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -71,12 +68,43 @@ export default function Timeline({ timeline }: TimelineProps) {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    let iw = 0; // internal (low-res) width
+    let iw = 0;
     let ih = 0;
     let bg: HTMLCanvasElement | null = null;
     const SCALE = 3;
 
-    // ---- node + path pixel art baked into an offscreen layer ----
+    const set = (g: CanvasRenderingContext2D, c: string) =>
+      (g.fillStyle = c);
+
+    const drawHouse = (g: CanvasRenderingContext2D, px: number, py: number) => {
+      const r = (x: number, y: number, w: number, h: number) =>
+        g.fillRect(px + x, py + y, w, h);
+      // shadow
+      set(g, "rgba(0,0,0,0.3)");
+      r(-9, 1, 18, 3);
+      // roof (stepped triangle)
+      set(g, "#b5482e");
+      for (let i = 0; i < 6; i++) r(-8 + i, -16 + i, 16 - i * 2, 1);
+      // chimney
+      set(g, "#7a3b2a");
+      r(4, -18, 3, 5);
+      // body
+      set(g, "#caa06a");
+      r(-7, -10, 14, 10);
+      // door
+      set(g, "#5a3a1f");
+      r(-2, -6, 4, 6);
+      set(g, "#ffd24a");
+      r(1, -3, 1, 1); // door knob
+      // window
+      set(g, "#9be7ff");
+      r(-5, -8, 3, 3);
+      r(3, -8, 3, 3);
+      set(g, "#5a3a1f");
+      r(-4, -8, 1, 3);
+      r(4, -8, 1, 3);
+    };
+
     const drawIcon = (
       g: CanvasRenderingContext2D,
       type: TimelineType,
@@ -84,67 +112,73 @@ export default function Timeline({ timeline }: TimelineProps) {
       py: number
     ) => {
       const col = TYPE_COLOR[type];
-      // base pad
-      g.fillStyle = "#1c2a18";
-      g.fillRect(px - 7, py - 3, 14, 7);
-      g.fillStyle = "#26331f";
-      g.fillRect(px - 7, py - 1, 14, 3);
-      const set = (c: string) => (g.fillStyle = c);
       const r = (x: number, y: number, w: number, h: number) =>
         g.fillRect(px + x, py + y, w, h);
-      set(col);
+      // base pad
+      set(g, "#1c2a18");
+      r(-8, -2, 16, 6);
+      set(g, "#26331f");
+      r(-8, 0, 16, 3);
       switch (type) {
-        case "EDUCATION": // school: building + roof + door
-          set("#caa06a");
-          r(-5, -10, 10, 8);
-          set("#7a3b2a");
-          r(-6, -13, 12, 3); // roof
-          set("#3a2a1a");
-          r(-1, -6, 2, 4); // door
-          set(col);
-          r(-4, -9, 2, 2);
-          r(2, -9, 2, 2);
+        case "EDUCATION": // school building
+          set(g, "#caa06a");
+          r(-6, -11, 12, 9);
+          set(g, "#7a3b2a");
+          for (let i = 0; i < 4; i++) r(-7 + i, -15 + i, 14 - i * 2, 1);
+          set(g, "#3a2a1a");
+          r(-1, -7, 2, 5); // door
+          set(g, "#9be7ff");
+          r(-5, -10, 3, 3);
+          r(2, -10, 3, 3); // windows
+          set(g, col);
+          r(-7, -2, 14, 1); // accent line
           break;
-        case "COMMUNITY": // flag on pole
-          set("#9aa0b0");
-          r(-1, -13, 1, 13);
-          set(col);
-          r(0, -13, 7, 5);
-          break;
-        case "PROJECT": // floppy/diamond disk
-          set("#16161f");
-          r(-5, -11, 10, 10);
-          set(col);
-          r(-3, -11, 6, 3);
-          set("#d8d8c8");
-          r(-3, -6, 6, 4);
+        case "WORK": // briefcase
+          set(g, "#8a5a2a");
+          r(-7, -9, 14, 9);
+          set(g, "#6a4420");
+          r(-7, -5, 14, 1);
+          set(g, "#caa06a");
+          r(-3, -12, 6, 3); // handle
+          set(g, "#3a2a1a");
+          r(-3, -12, 6, 1);
+          set(g, col);
+          r(-1, -6, 2, 3); // latch
           break;
         case "EVENT": // trophy
-          set(col);
+          set(g, col);
           r(-4, -12, 8, 4);
-          r(-2, -8, 4, 3); // stem
-          set("#caa000");
-          r(-3, -5, 6, 2); // base
+          r(-2, -8, 4, 3);
+          set(g, "#caa000");
+          r(-3, -5, 6, 2);
           break;
-        case "ONGOING": // gear/star
-          set(col);
-          r(-2, -13, 4, 12);
-          r(-6, -8, 12, 4);
-          r(-4, -11, 8, 8);
-          set("#0a0a0f");
-          r(-1, -8, 2, 2);
+        case "PROJECT": // disk
+          set(g, "#16161f");
+          r(-5, -11, 10, 10);
+          set(g, col);
+          r(-3, -11, 6, 3);
+          set(g, "#d8d8c8");
+          r(-3, -6, 6, 4);
+          break;
+        default: // flag (community / ongoing)
+          set(g, "#9aa0b0");
+          r(-1, -13, 1, 13);
+          set(g, col);
+          r(0, -13, 7, 5);
           break;
       }
     };
+
+    const px = (p: Pt) => ({ x: p.x * iw, y: p.y * ih });
 
     const buildBackground = () => {
       const off = document.createElement("canvas");
       off.width = iw;
       off.height = ih;
       const g = off.getContext("2d")!;
-      const rnd = mulberry(1337);
+      const rnd = mulberry(2024);
 
-      // grass base + texture tiles
+      // grass
       g.fillStyle = "#2f4a22";
       g.fillRect(0, 0, iw, ih);
       const tile = 4;
@@ -155,26 +189,21 @@ export default function Timeline({ timeline }: TimelineProps) {
           else if (v < 0.16) g.fillStyle = "#284018";
           else continue;
           g.fillRect(x, y, tile, tile);
-          if (v > 0.96) {
+          if (v > 0.965) {
             g.fillStyle = "#4a6b30";
             g.fillRect(x + 1, y + 1, 1, 1);
           }
         }
       }
 
-      // winding path between consecutive nodes
-      const px = (p: Pt) => ({ x: p.x * iw, y: p.y * ih });
-      for (let i = 0; i < nodes.length - 1; i++) {
-        const a = px(nodes[i]);
-        const b = px(nodes[i + 1]);
-        const steps = Math.max(
-          24,
-          Math.round(Math.hypot(b.x - a.x, b.y - a.y))
-        );
+      // winding path through all waypoints
+      for (let i = 0; i < waypoints.length - 1; i++) {
+        const a = px(waypoints[i]);
+        const b = px(waypoints[i + 1]);
+        const steps = Math.max(20, Math.round(Math.hypot(b.x - a.x, b.y - a.y)));
         for (let s = 0; s <= steps; s++) {
           const t = s / steps;
-          // gentle sine wobble perpendicular to the segment
-          const wob = Math.sin(t * Math.PI * 3) * 4;
+          const wob = Math.sin(t * Math.PI * 2) * 3;
           const nx = -(b.y - a.y);
           const ny = b.x - a.x;
           const len = Math.hypot(nx, ny) || 1;
@@ -187,6 +216,10 @@ export default function Timeline({ timeline }: TimelineProps) {
         }
       }
 
+      // house at the top
+      const h = px(house);
+      drawHouse(g, Math.round(h.x), Math.round(h.y));
+
       // nodes
       for (let i = 0; i < nodes.length; i++) {
         const p = px(nodes[i]);
@@ -197,10 +230,10 @@ export default function Timeline({ timeline }: TimelineProps) {
     };
 
     const resize = () => {
-      const cssW = sticky.clientWidth;
-      const cssH = sticky.clientHeight;
+      const cssW = map.clientWidth;
+      const cssH = map.clientHeight;
       iw = Math.max(120, Math.floor(cssW / SCALE));
-      ih = Math.max(120, Math.floor(cssH / SCALE));
+      ih = Math.max(160, Math.floor(cssH / SCALE));
       canvas.width = iw;
       canvas.height = ih;
       canvas.style.width = `${cssW}px`;
@@ -209,24 +242,25 @@ export default function Timeline({ timeline }: TimelineProps) {
       buildBackground();
     };
 
-    // ---- sprite ----
-    const drawSprite = (px: number, py: number, frame: number, walk: boolean) => {
+    const drawSprite = (
+      cxp: number,
+      cyp: number,
+      frame: number,
+      walk: boolean
+    ) => {
       const bob = frame === 1 ? -1 : 0;
-      const y = py + bob;
+      const y = cyp + bob;
       const b = (dx: number, dy: number, w: number, h: number, c: string) => {
         ctx.fillStyle = c;
-        ctx.fillRect(Math.round(px + dx), Math.round(y + dy), w, h);
+        ctx.fillRect(Math.round(cxp + dx), Math.round(y + dy), w, h);
       };
-      // shadow
       ctx.fillStyle = "rgba(0,0,0,0.35)";
-      ctx.fillRect(Math.round(px - 3), Math.round(py + 1), 6, 2);
-      // head / body / arms
-      b(-2, -11, 4, 4, "#e3b48a");
-      b(-1, -13, 2, 2, "#2a2a3f"); // hair
+      ctx.fillRect(Math.round(cxp - 3), Math.round(cyp + 1), 6, 2);
+      b(-2, -11, 4, 4, "#e3b48a"); // head
+      b(-2, -13, 4, 2, "#2a2a3f"); // hair
       b(-2, -7, 4, 4, "#39ff14"); // shirt
       b(-4, -7, 2, 3, "#39ff14");
       b(2, -7, 2, 3, "#39ff14"); // arms
-      // legs (2-frame stride)
       if (walk && frame === 1) {
         b(-3, -3, 2, 3, "#2a2a3f");
         b(1, -3, 2, 3, "#2a2a3f");
@@ -234,8 +268,7 @@ export default function Timeline({ timeline }: TimelineProps) {
         b(-2, -3, 2, 3, "#2a2a3f");
         b(0, -3, 2, 3, "#2a2a3f");
       }
-      // tiny laptop glow
-      b(-1, -6, 3, 1, "#9be7ff");
+      b(-1, -6, 3, 1, "#9be7ff"); // laptop glow
     };
 
     const easeInOut = (t: number) =>
@@ -247,43 +280,35 @@ export default function Timeline({ timeline }: TimelineProps) {
 
     const frameLoop = () => {
       const p = progressRef.current;
-      const segCount = Math.max(1, nodes.length - 1);
+      const segCount = Math.max(1, waypoints.length - 1);
       const span = 1 / segCount;
-      let seg = Math.min(segCount - 1, Math.floor(p / span));
-      const local = (p - seg * span) / span; // 0..1 within segment
-      const travel = 0.66;
+      const seg = Math.min(segCount - 1, Math.max(0, Math.floor(p / span)));
+      const local = (p - seg * span) / span;
+      const travel = 0.6;
 
       let pos: Pt;
       let walking: boolean;
-      let activeIdx: number;
       if (local < travel) {
         const t = easeInOut(local / travel);
         pos = {
-          x: nodes[seg].x + (nodes[seg + 1].x - nodes[seg].x) * t,
-          y: nodes[seg].y + (nodes[seg + 1].y - nodes[seg].y) * t,
+          x: waypoints[seg].x + (waypoints[seg + 1].x - waypoints[seg].x) * t,
+          y: waypoints[seg].y + (waypoints[seg + 1].y - waypoints[seg].y) * t,
         };
         walking = true;
-        activeIdx = seg;
       } else {
-        pos = nodes[seg + 1];
-        walking = false;
-        activeIdx = seg + 1;
-      }
-      if (p <= 0.0001) {
-        pos = nodes[0];
-        activeIdx = 0;
+        pos = waypoints[seg + 1];
         walking = false;
       }
+      const activeIdx = Math.min(nodes.length - 1, seg); // node index
 
       if (activeIdx !== lastActive) {
         lastActive = activeIdx;
         setActive(activeIdx);
       }
 
-      // render
       if (bg) ctx.drawImage(bg, 0, 0);
       const elapsed = performance.now() - start;
-      const frame = Math.floor(elapsed / 250) % 2; // 4fps 2-frame
+      const frame = Math.floor(elapsed / 250) % 2;
       drawSprite(pos.x * iw, pos.y * ih, frame, walking && !reduce);
 
       raf = requestAnimationFrame(frameLoop);
@@ -292,13 +317,12 @@ export default function Timeline({ timeline }: TimelineProps) {
     resize();
     window.addEventListener("resize", resize);
 
-    // ---- scroll → progress ----
     const mm = gsap.matchMedia();
     mm.add("(min-width: 769px)", () => {
       const st = ScrollTrigger.create({
         trigger: section,
         start: "top top",
-        end: "+=1800",
+        end: "+=2400",
         pin: sticky,
         scrub: true,
         anticipatePin: 1,
@@ -310,8 +334,8 @@ export default function Timeline({ timeline }: TimelineProps) {
     mm.add("(max-width: 768px)", () => {
       const st = ScrollTrigger.create({
         trigger: section,
-        start: "top 70%",
-        end: "bottom 30%",
+        start: "top 75%",
+        end: "bottom 40%",
         scrub: true,
         onUpdate: (self) => (progressRef.current = self.progress),
       });
@@ -331,6 +355,16 @@ export default function Timeline({ timeline }: TimelineProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeline.length]);
 
+  // keep the active card centered in the log rail as the character descends
+  useEffect(() => {
+    const container = logRef.current;
+    const item = itemRefs.current[active];
+    if (!container || !item) return;
+    const target =
+      item.offsetTop - container.clientHeight / 2 + item.clientHeight / 2;
+    container.scrollTo({ top: target, behavior: "smooth" });
+  }, [active]);
+
   return (
     <section id="timeline" ref={sectionRef} className="timeline">
       <div ref={stickyRef} className="timeline__sticky">
@@ -342,7 +376,7 @@ export default function Timeline({ timeline }: TimelineProps) {
           />
 
           <div className="timeline__layout">
-            <div className="map">
+            <div ref={mapRef} className="map">
               <canvas ref={canvasRef} aria-hidden />
               {nodes.map((p, i) => (
                 <span
@@ -350,27 +384,35 @@ export default function Timeline({ timeline }: TimelineProps) {
                   className={`map__tag${i === active ? " is-active" : ""}`}
                   style={{ left: `${p.x * 100}%`, top: `${p.y * 100}%` }}
                 >
-                  {timeline[i].year}
+                  {shortYear(timeline[i].year)}
                 </span>
               ))}
-              <span className="map__legend dim">▲ scroll to walk the path</span>
+              <span className="map__legend dim">▼ scroll to walk the path</span>
             </div>
 
-            <ol className="log">
+            <ol ref={logRef} className="log">
               {timeline.map((entry, i) => (
                 <li
                   key={i}
+                  ref={(el) => {
+                    itemRefs.current[i] = el;
+                  }}
                   className={`log__item${i === active ? " is-active" : ""}`}
                 >
-                  <span
-                    className="log__type"
-                    style={{ color: TYPE_COLOR[entry.type] }}
-                  >
-                    [{entry.type}]
-                  </span>
-                  <span className="log__year amber">{entry.year}</span>
+                  <div className="log__top">
+                    <span
+                      className="log__type"
+                      style={{ color: TYPE_COLOR[entry.type] }}
+                    >
+                      [{entry.type}]
+                    </span>
+                    <span className="log__year amber">{entry.year}</span>
+                  </div>
                   <span className="log__title">{entry.title}</span>
-                  <span className="log__desc dim">{entry.description}</span>
+                  {entry.org && <span className="log__org dim">{entry.org}</span>}
+                  {i === active && (
+                    <span className="log__desc">{entry.description}</span>
+                  )}
                 </li>
               ))}
             </ol>
@@ -393,13 +435,14 @@ export default function Timeline({ timeline }: TimelineProps) {
         }
         .timeline__layout {
           display: grid;
-          grid-template-columns: 1.15fr 0.85fr;
+          grid-template-columns: 320px 1fr;
           gap: var(--space-4);
           align-items: stretch;
         }
         .map {
           position: relative;
-          height: 460px;
+          height: 70vh;
+          min-height: 480px;
           border: 2px solid var(--border);
           overflow: hidden;
           box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.55);
@@ -410,10 +453,10 @@ export default function Timeline({ timeline }: TimelineProps) {
         }
         .map__tag {
           position: absolute;
-          transform: translate(-50%, -260%);
-          font-size: 0.46rem;
+          transform: translate(-50%, -50%) translateX(34px);
+          font-size: 0.44rem;
           color: var(--white);
-          background: rgba(10, 10, 15, 0.82);
+          background: rgba(10, 10, 15, 0.85);
           border: 2px solid var(--border);
           padding: 3px 5px;
           white-space: nowrap;
@@ -435,46 +478,59 @@ export default function Timeline({ timeline }: TimelineProps) {
           list-style: none;
           display: flex;
           flex-direction: column;
-          gap: 10px;
-          max-height: 460px;
-          overflow: auto;
-          padding-right: 6px;
+          gap: 12px;
+          max-height: 70vh;
+          min-height: 480px;
+          overflow: hidden;
+          padding-right: 4px;
         }
         .log__item {
-          display: grid;
-          grid-template-columns: auto auto;
-          grid-auto-rows: auto;
-          gap: 4px 10px;
-          padding: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 14px 16px;
           border: 2px solid var(--border);
           background: var(--surface);
-          opacity: 0.5;
-          transition: opacity 0.15s steps(2), border-color 0.15s steps(2),
-            transform 0.15s steps(2);
+          opacity: 0.45;
+          transition: opacity 0.18s steps(3), border-color 0.18s steps(3),
+            transform 0.18s steps(3), box-shadow 0.18s steps(3);
         }
         .log__item.is-active {
           opacity: 1;
           border-color: var(--green);
-          box-shadow: 0 0 16px var(--green-dim);
-          transform: translateX(4px);
+          box-shadow: 0 0 18px var(--green-dim);
+          transform: translateX(6px);
+        }
+        .log__top {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 10px;
         }
         .log__type {
-          font-size: 0.42rem;
+          font-size: 0.44rem;
+          letter-spacing: 1px;
         }
         .log__year {
-          font-size: 0.42rem;
-          text-align: right;
+          font-size: 0.44rem;
         }
         .log__title {
-          grid-column: 1 / -1;
-          font-size: 0.55rem;
+          font-size: 0.7rem;
           color: var(--white);
-          line-height: 1.6;
+          line-height: 1.5;
+        }
+        .log__org {
+          font-size: 0.46rem;
+          line-height: 1.7;
+          letter-spacing: 0.5px;
         }
         .log__desc {
-          grid-column: 1 / -1;
-          font-size: 0.46rem;
-          line-height: 1.8;
+          font-size: 0.5rem;
+          line-height: 2;
+          color: var(--white);
+          border-left: 2px solid var(--green);
+          padding-left: 12px;
+          margin-top: 4px;
         }
         @media (max-width: 768px) {
           .timeline__sticky {
@@ -482,12 +538,16 @@ export default function Timeline({ timeline }: TimelineProps) {
           }
           .timeline__layout {
             grid-template-columns: 1fr;
+            gap: var(--space-3);
           }
           .map {
-            height: 320px;
+            height: 360px;
+            min-height: 0;
           }
           .log {
             max-height: none;
+            min-height: 0;
+            overflow: visible;
           }
         }
       `}</style>
