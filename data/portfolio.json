@@ -1,0 +1,186 @@
+{
+  "personal": {
+    "name": "Bouziani Ahmed Aness",
+    "handle": "ANESS.SYS",
+    "title": "Computer Science Student, Full-Stack & Mobile Developer",
+    "school": "ESI Algiers",
+    "year": "2CP",
+    "location": "ESI Algiers · Algeria",
+    "bio": [
+      "I'm Aness, a second-year CS student at ESI Algiers building useful products across web, mobile, and backend.",
+      "I turn ideas into practical tools — from student productivity apps and local service platforms to internal systems and desktop utilities.",
+      "Active member of ETIC. Interested in clean architecture, thoughtful interfaces, and Discord bots."
+    ],
+    "github": "https://github.com/23aneessss",
+    "email": "oa_bouziani@esi.dz"
+  },
+
+  "stats": [
+    { "label": "STR [Web]", "value": 88 },
+    { "label": "AGI [Mobile]", "value": 82 },
+    { "label": "INT [Design]", "value": 78 },
+    { "label": "WIS [Arch]", "value": 85 }
+  ],
+
+  "projects": [
+    {
+      "id": "student-planner",
+      "label": "Student Planner",
+      "category": "Mobile",
+      "subcategory": "Productivity",
+      "status": "LIVE",
+      "description": "A mobile student planner helping students stay organized with schedules, tasks, and day-to-day academic planning in one clean experience.",
+      "stack": ["Dart", "Flutter", "Mobile UI"],
+      "link": "https://github.com/23aneessss/student-planner"
+    },
+    {
+      "id": "port-flow",
+      "label": "Port-Flow",
+      "category": "Logistics",
+      "subcategory": "Platform",
+      "status": "LIVE",
+      "description": "A port terminal booking platform with role-based management for Admins, Operators, Carriers, and Drivers. Includes carrier registration, operational coordination, and connected web and mobile workflows.",
+      "stack": ["TypeScript", "Next.js", "Express.js", "React Native"],
+      "link": "https://github.com/23aneessss/Port-Flow"
+    },
+    {
+      "id": "nearby",
+      "label": "Nearby",
+      "category": "Marketplace",
+      "subcategory": "Location",
+      "status": "IN PROGRESS",
+      "description": "A location-based marketplace platform that helps clients discover and book professional services in their immediate area, creating a smoother connection between local demand and nearby providers.",
+      "stack": ["TypeScript", "Next.js", "Booking", "Location Search"],
+      "link": "https://github.com/23aneessss/Nearby-App"
+    },
+    {
+      "id": "focustime",
+      "label": "FocusTime",
+      "category": "Desktop",
+      "subcategory": "macOS",
+      "status": "LIVE",
+      "description": "An offline macOS Pomodoro timer app designed as a small floating utility window with a pixel-art inspired style, plus a WidgetKit widget that shows quick daily focus stats at a glance.",
+      "stack": ["Swift", "SwiftUI", "WidgetKit"],
+      "link": "https://github.com/23aneessss/FocusTime"
+    },
+    {
+      "id": "movio",
+      "label": "Movio",
+      "category": "Mobile",
+      "subcategory": "Movies",
+      "status": "LIVE",
+      "description": "A mobile movie discovery app that helps users explore films, save favorites, mark watched titles, and manage a personal viewing profile in one clean experience.",
+      "stack": ["Flutter", "Dart"],
+      "link": "https://github.com/23aneessss/Movio"
+    },
+    {
+      "id": "doctorcom",
+      "label": "DoctorCom",
+      "category": "HealthTech",
+      "subcategory": "SaaS",
+      "status": "IN PROGRESS",
+      "description": "An intelligent medical office platform built to help clinics manage communication, organization, and daily operations through a smarter digital workflow.",
+      "stack": ["TypeScript", "Next.js", "HealthTech"],
+      "link": null
+    },
+    {
+      "id": "etic-platform",
+      "label": "ETIC Platform",
+      "category": "Internal Tools",
+      "subcategory": "Club Ops",
+      "status": "IN PROGRESS",
+      "description": "A platform for managing ETIC's external relations, partnerships, and coordination workflows with a more organized and collaborative system.",
+      "stack": ["TypeScript", "Next.js"],
+      "link": null
+    },
+    {
+      "id": "contact-platform",
+      "label": "Contact Platform",
+      "category": "Productivity",
+      "subcategory": "Web",
+      "status": "IN PROGRESS",
+      "description": "A platform focused on streamlining contact management and communication flows through a cleaner, more structured digital experience.",
+      "stack": ["Web", "Communication"],
+      "link": null
+    }
+  ],
+
+  "skills": {
+    "languages": [
+      { "name": "JavaScript", "value": 89 },
+      { "name": "TypeScript", "value": 91 },
+      { "name": "Python", "value": 85 },
+      { "name": "C", "value": 72 },
+      { "name": "C++", "value": 74 },
+      { "name": "Go", "value": 63 },
+      { "name": "Swift", "value": 71 },
+      { "name": "Dart", "value": 82 },
+      { "name": "HTML5", "value": 90 },
+      { "name": "CSS3", "value": 86 },
+      { "name": "Java", "value": 78 }
+    ],
+    "frameworks": [
+      { "name": "React", "value": 88 },
+      { "name": "Next.js", "value": 90 },
+      { "name": "React Native", "value": 80 },
+      { "name": "Flutter", "value": 84 },
+      { "name": "SwiftUI", "value": 72 },
+      { "name": "Node.js", "value": 87 },
+      { "name": "Express.js", "value": 83 },
+      { "name": "NestJS", "value": 74 },
+      { "name": "FastAPI", "value": 76 },
+      { "name": "Django", "value": 70 },
+      { "name": "Flask", "value": 77 },
+      { "name": "tRPC", "value": 75 },
+      { "name": "Hono", "value": 67 },
+      { "name": "Discord.js", "value": 81 }
+    ],
+    "tools": [
+      { "name": "Docker", "value": 70 },
+      { "name": "Linux", "value": 78 },
+      { "name": "Git", "value": 89 },
+      { "name": "GitHub", "value": 92 },
+      { "name": "Figma", "value": 78 },
+      { "name": "Adobe Illustrator", "value": 62 }
+    ]
+  },
+
+  "timeline": [
+    {
+      "year": "2024",
+      "title": "ESI Algiers — Enrolled",
+      "description": "Started Computer Science at the National Higher School of Computer Science, 2CP program.",
+      "type": "EDUCATION"
+    },
+    {
+      "year": "2024",
+      "title": "Joined ETIC",
+      "description": "Active member contributing to club initiatives and community-focused projects.",
+      "type": "COMMUNITY"
+    },
+    {
+      "year": "2025",
+      "title": "Port-Flow shipped",
+      "description": "Full logistics platform with role-based management across web and mobile.",
+      "type": "PROJECT"
+    },
+    {
+      "year": "2025",
+      "title": "Student Planner shipped",
+      "description": "Flutter mobile productivity app for academic scheduling.",
+      "type": "PROJECT"
+    },
+    {
+      "year": "2025",
+      "title": "S2EE Job Fair — 17th Edition",
+      "description": "Helped organize the student entrepreneurship and employment fair at ESI.",
+      "type": "EVENT"
+    },
+    {
+      "year": "2025–2026",
+      "title": "DoctorCom · Nearby · and more",
+      "description": "Actively building across HealthTech, marketplaces, and internal tooling.",
+      "type": "ONGOING"
+    }
+  ]
+}
