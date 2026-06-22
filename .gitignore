@@ -29,3 +29,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.data/
+
+data
+.
+/data
+
+
+data/portfolio.json
+
+

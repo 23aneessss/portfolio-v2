@@ -111,9 +111,49 @@
       "category": "HealthTech",
       "subcategory": "SaaS",
       "status": "IN PROGRESS",
-      "description": "An intelligent medical office platform built to help clinics manage communication, organization, and daily operations through a smarter digital workflow.",
+      "description": "An AI-powered medical cabinet platform for managing patient records, appointments, and clinic workflows — built with TypeScript for speed and scalability, with smart automation and secure data handling.",
       "stack": ["TypeScript", "Next.js", "HealthTech"],
-      "link": null
+      "link": "https://github.com/23aneessss/doctorcom"
+    },
+    {
+      "id": "focusnotch",
+      "label": "FocusNotch",
+      "category": "Desktop",
+      "subcategory": "macOS · Productivity",
+      "status": "LIVE",
+      "description": "A Pomodoro timer that lives in your MacBook's notch — glanceable countdown and sessions, hover to expand, one-tap Do Not Disturb. Native SwiftUI for macOS 14+.",
+      "stack": ["Swift", "SwiftUI", "macOS"],
+      "link": "https://github.com/23aneessss/FocusNotch"
+    },
+    {
+      "id": "appxray",
+      "label": "AppXray",
+      "category": "Developer Tool",
+      "subcategory": "macOS · Privacy",
+      "status": "LIVE",
+      "description": "An independent privacy and capability auditor for macOS apps — reads what an app can really do straight from the binary and code signature, 100% offline. No App Store self-declarations, just the truth.",
+      "stack": ["Swift", "Swift 6", "macOS"],
+      "link": "https://github.com/23aneessss/AppXray"
+    },
+    {
+      "id": "macagentkit",
+      "label": "MacAgentKit",
+      "category": "Developer Tool",
+      "subcategory": "macOS · Automation",
+      "status": "LIVE",
+      "description": "The missing low-level toolkit for macOS automation and AI agents — a clean, dependency-free Swift package that handles TCC permissions, the Accessibility API, Control Center, Shortcuts, and input synthesis so your app doesn't have to.",
+      "stack": ["Swift", "SwiftPM", "macOS"],
+      "link": "https://github.com/23aneessss/MacAgentKit"
+    },
+    {
+      "id": "ecom-website-template",
+      "label": "E-Commerce Template",
+      "category": "Web",
+      "subcategory": "Full-Stack",
+      "status": "LIVE",
+      "description": "A full-stack e-commerce web app template with a clean responsive UI — includes authentication, product and catalog management, cart and checkout flow, and an admin dashboard to quickly launch and customize an online store.",
+      "stack": ["TypeScript", "Next.js", "React"],
+      "link": "https://github.com/23aneessss/ecom-website-template"
     },
     {
       "id": "etic-platform",
