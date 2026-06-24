@@ -87,13 +87,23 @@
     },
     {
       "id": "focustime",
-      "label": "FocusTime",
+      "label": "Pomodoro-macOS",
       "category": "Desktop",
       "subcategory": "macOS",
       "status": "LIVE",
       "description": "An offline macOS Pomodoro timer app designed as a small floating utility window with a pixel-art inspired style, plus a WidgetKit widget that shows quick daily focus stats at a glance.",
       "stack": ["Swift", "SwiftUI", "WidgetKit"],
       "link": "https://github.com/23aneessss/FocusTime"
+    },
+    {
+      "id": "brume",
+      "label": "Brume",
+      "category": "Mobile",
+      "subcategory": "iOS · Journaling",
+      "status": "LIVE",
+      "description": "A calm, hand-drawn iOS journal where your words and sketches live on the same page — tap to write, switch to draw, set a mood and let it go. Warm hand-crafted aesthetic, 100% local, nothing ever uploaded.",
+      "stack": ["Swift", "SwiftUI", "SwiftData"],
+      "link": "https://github.com/23aneessss/Brume"
     },
     {
       "id": "movio",
